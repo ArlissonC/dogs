@@ -5,7 +5,7 @@ import useForm from "hooks/useForm";
 import { Link, Outlet } from "react-router-dom";
 
 const Login = () => {
-  const { userLogin } = useAuth();
+  const { userLogin, error, loading } = useAuth();
   const username = useForm();
   const password = useForm();
 
@@ -22,7 +22,13 @@ const Login = () => {
       <form action="" onSubmit={handleSubmit}>
         <Input label="Usuário" type="text" name="username" {...username} />
         <Input label="Senha" type="password" name="password" {...password} />
-        <Button>Entrar</Button>
+        {loading ? (
+          <Button disabled>Carregando...</Button>
+        ) : (
+          <Button>Entrar</Button>
+        )}
+
+        {error && <p>{error}</p>}
       </form>
       <Outlet />
       <Link to="criar">Cadastro</Link>

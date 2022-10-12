@@ -3,6 +3,10 @@ import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from "services/auth";
 
 interface AuthContextState {
   userLogin: (username: string, password: string) => void;
+  userLogout: () => void;
+  error: any;
+  loading: boolean;
+  login: boolean | null;
   data: any;
 }
 
@@ -16,17 +20,38 @@ const AuthProvider = ({ children }: Props) => {
   const [data, setData] = useState(null);
   const [login, setLogin] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<any>(false);
 
   useEffect(() => {
     (async () => {
       const token = localStorage.getItem("token");
 
       if (token) {
-        const response = await TOKEN_VALIDATE_POST(token);
+        try {
+          setError(null);
+          setLoading(true);
+          const response = await TOKEN_VALIDATE_POST(token);
+          if (response.data.data.status !== 200)
+            throw new Error("Token inválido");
+
+          await getUser();
+        } catch (error) {
+          userLogout();
+        } finally {
+          setLoading(false);
+        }
       }
     })();
   }, []);
+
+  const userLogout = async () => {
+    setData(null);
+    setError(null);
+    setLoading(false);
+    setLogin(false);
+    localStorage.removeItem("token");
+    window.location.href = "login";
+  };
 
   const getUser = async () => {
     const response = await USER_GET();
@@ -35,17 +60,30 @@ const AuthProvider = ({ children }: Props) => {
   };
 
   const userLogin = async (username: string, password: string) => {
-    const response = await TOKEN_POST({
-      username: username,
-      password: password,
-    });
+    try {
+      setError(null);
+      setLoading(true);
 
-    localStorage.setItem("token", response.data.token);
-    getUser();
+      const response = await TOKEN_POST({
+        username: username,
+        password: password,
+      });
+      localStorage.setItem("token", response.data.token);
+      await getUser();
+    } catch (error) {
+      if (error instanceof Error) {
+        setError("Usuário inválido");
+        setLogin(false);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ userLogin, data }}>
+    <AuthContext.Provider
+      value={{ userLogin, data, userLogout, error, loading, login }}
+    >
       {children}
     </AuthContext.Provider>
   );
