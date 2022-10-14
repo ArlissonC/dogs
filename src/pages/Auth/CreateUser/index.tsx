@@ -16,7 +16,7 @@ const CreateUser = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username.validate() && password.validate()) {
+    if (username.validate() && password.validate() && email.validate()) {
       const { response } = await request(
         USER_POST({
           username: username.value,
