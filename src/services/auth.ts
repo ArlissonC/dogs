@@ -11,3 +11,7 @@ export const USER_GET = () => {
 export const TOKEN_VALIDATE_POST = (body: any) => {
   return api.post("/jwt-auth/v1/token/validate", body);
 };
+
+export const USER_POST = (body: any) => {
+  return api.post("/api/user", body);
+};

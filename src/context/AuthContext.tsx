@@ -50,7 +50,7 @@ const AuthProvider = ({ children }: Props) => {
     setLoading(false);
     setLogin(false);
     localStorage.removeItem("token");
-    window.location.href = "login";
+    window.location.href = "auth";
   };
 
   const getUser = async () => {

@@ -15,7 +15,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="auth" element={<LoginForm />}>
-          <Route path="login" element={<Login />} />
+          <Route index element={<Login />} />
           <Route path="criar" element={<CreateUser />} />
           <Route path="perdeu-senha" element={<LostPassword />} />
           <Route path="resetar" element={<Reset />} />

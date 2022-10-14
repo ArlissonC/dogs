@@ -6,8 +6,8 @@ interface Props {
   name: string;
   setValue?: (param: string) => void;
   value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  onBlur: React.FocusEventHandler<HTMLInputElement> | undefined;
+  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
   error: string;
 }
 

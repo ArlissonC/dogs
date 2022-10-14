@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Dogs } from "assets/dogs.svg";
 import styles from "./Header.module.css";
@@ -19,7 +18,7 @@ const Header = () => {
             <button onClick={userLogout}>Sair</button>
           </Link>
         ) : (
-          <Link className={styles.login} to="auth/login">
+          <Link className={styles.login} to="auth">
             Login / Criar
           </Link>
         )}
