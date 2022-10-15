@@ -4,7 +4,7 @@ import styles from "./Header.module.css";
 import { useAuth } from "context/AuthContext";
 
 const Header = () => {
-  const { data, userLogout } = useAuth();
+  const { data } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -15,7 +15,6 @@ const Header = () => {
         {data ? (
           <Link className={styles.login} to="/conta">
             {data?.nome}
-            <button onClick={userLogout}>Sair</button>
           </Link>
         ) : (
           <Link className={styles.login} to="auth">

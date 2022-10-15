@@ -40,6 +40,8 @@ const AuthProvider = ({ children }: Props) => {
         } finally {
           setLoading(false);
         }
+      } else {
+        setLogin(false);
       }
     })();
   }, []);
