@@ -12,7 +12,9 @@ const useFetch = () => {
       setLoading(true);
       response = await method;
     } catch (error) {
-      setError("Endereço de e-mail já está em uso.");
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     } finally {
       setData(response);
       setLoading(false);

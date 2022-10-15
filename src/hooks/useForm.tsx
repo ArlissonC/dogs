@@ -5,14 +5,19 @@ interface Validation {
     regex: RegExp;
     message: string;
   };
+  number: {
+    regex: RegExp;
+    message: string;
+  };
 }
 
-const validation: Validation = {
+const validation = {
   email: {
     regex:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     message: "Preencha um email válido",
   },
+  number: { regex: /^\d+$/, message: "Utilize apenas números" },
 };
 
 const useForm = (type?: string | boolean) => {
@@ -33,7 +38,7 @@ const useForm = (type?: string | boolean) => {
       validation[type as keyof Validation] &&
       !validation[type as keyof Validation].regex.test(value)
     ) {
-      setError(validation.email.message);
+      setError(validation[type as keyof Validation].message);
       return false;
     } else {
       setError(null);
