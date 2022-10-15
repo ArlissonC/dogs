@@ -17,10 +17,24 @@ interface Props {
 const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 
 const AuthProvider = ({ children }: Props) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(() => {
+    const user = JSON.parse(localStorage.getItem("user")!);
+
+    if (user) return user;
+
+    return null;
+  });
   const [login, setLogin] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user")!);
+
+    if (user) return setLogin(true);
+
+    return setLogin(false);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -30,10 +44,7 @@ const AuthProvider = ({ children }: Props) => {
         try {
           setError(null);
           setLoading(true);
-          const response = await TOKEN_VALIDATE_POST(token);
-          if (response.data.data.status !== 200)
-            throw new Error("Token inválido");
-
+          await TOKEN_VALIDATE_POST(token);
           await getUser();
         } catch (error) {
           userLogout();
@@ -52,12 +63,14 @@ const AuthProvider = ({ children }: Props) => {
     setLoading(false);
     setLogin(false);
     localStorage.removeItem("token");
-    window.location.href = "auth";
+    localStorage.removeItem("user");
+    window.location.href = "/";
   };
 
   const getUser = async () => {
     const response = await USER_GET();
     setData(response.data);
+    localStorage.setItem("user", JSON.stringify(response.data));
     setLogin(true);
   };
 
