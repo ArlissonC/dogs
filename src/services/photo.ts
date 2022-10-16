@@ -11,3 +11,11 @@ export const PHOTOS_GET = ({ page, total, user }: any) => {
 export const PHOTO_GET = (id: number) => {
   return api.get(`/api/photo/${id}`);
 };
+
+export const COMMENT_POST = (id: number, body: any) => {
+  return api.post(`/api/comment/${id}`, body);
+};
+
+export const PHOTO_DELETE = (id: number) => {
+  return api.delete(`/api/photo/${id}`);
+};

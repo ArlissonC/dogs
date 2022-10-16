@@ -8,6 +8,7 @@ interface AuthContextState {
   loading: boolean;
   login: boolean | null;
   data: any;
+  userLogged: () => boolean;
 }
 
 interface Props {
@@ -29,12 +30,16 @@ const AuthProvider = ({ children }: Props) => {
   const [error, setError] = useState<any>(false);
 
   useEffect(() => {
+    userLogged();
+  }, []);
+
+  const userLogged = () => {
     const user = JSON.parse(localStorage.getItem("user")!);
 
-    if (user) return setLogin(true);
+    if (user) return true;
 
-    return setLogin(false);
-  }, []);
+    return false;
+  };
 
   useEffect(() => {
     (async () => {
@@ -53,6 +58,7 @@ const AuthProvider = ({ children }: Props) => {
         }
       } else {
         setLogin(false);
+        setData(null);
       }
     })();
   }, []);
@@ -64,7 +70,7 @@ const AuthProvider = ({ children }: Props) => {
     setLogin(false);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href = "/";
+    window.location.href = "/auth";
   };
 
   const getUser = async () => {
@@ -97,7 +103,7 @@ const AuthProvider = ({ children }: Props) => {
 
   return (
     <AuthContext.Provider
-      value={{ userLogin, data, userLogout, error, loading, login }}
+      value={{ userLogin, data, userLogout, error, loading, login, userLogged }}
     >
       {children}
     </AuthContext.Provider>

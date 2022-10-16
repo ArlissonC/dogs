@@ -1,6 +1,6 @@
 import Error from "components/Helper/Error";
 import Loading from "components/Helper/Loading";
-import PhotoContent from "components/PhotoContent";
+import PhotoContent from "components/Photo/PhotoContent";
 import useFetch from "hooks/useFetch";
 import { IPhoto } from "interfaces/Photo/IPhoto";
 import { useEffect } from "react";

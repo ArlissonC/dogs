@@ -3,9 +3,9 @@ import AuthRoutes from "./AuthRoutes";
 import UserRoutes from "./UserRoutes";
 
 const Router = () => {
-  const { login } = useAuth();
+  const { userLogged } = useAuth();
 
-  if (login) {
+  if (userLogged()) {
     return <UserRoutes />;
   }
 

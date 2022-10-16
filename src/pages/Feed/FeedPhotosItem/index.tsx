@@ -1,3 +1,4 @@
+import Image from "components/Helper/Image";
 import { IPhoto } from "interfaces/Photo/IPhoto";
 import styles from "./FeedPhotosItem.module.css";
 
@@ -12,7 +13,7 @@ const FeedPhotosItem = ({ photo, setModalPhoto }: FeedPhotoItemProps) => {
   };
   return (
     <li className={styles.photo} onClick={handleClick}>
-      <img src={photo.src} alt={photo.title} />
+      <Image src={photo.src} alt={photo.title} />
       <span className={styles.visualizacao}>{photo.acessos}</span>
     </li>
   );

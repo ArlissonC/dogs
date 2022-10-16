@@ -33,8 +33,7 @@ const PhotoPost = () => {
     formData.append("peso", peso.value);
     formData.append("idade", idade.value);
 
-    const response = await request(PHOTO_POST(formData));
-    console.log(response);
+    await request(PHOTO_POST(formData));
   };
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {

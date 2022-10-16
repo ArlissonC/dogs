@@ -17,7 +17,7 @@ const Header = () => {
             {data?.nome}
           </Link>
         ) : (
-          <Link className={styles.login} to="/">
+          <Link className={styles.login} to="/auth">
             Login / Criar
           </Link>
         )}
