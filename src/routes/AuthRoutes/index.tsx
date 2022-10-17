@@ -15,9 +15,9 @@ const AuthRoutes = () => {
         <Route path="criar" element={<CreateUser />} />
         <Route path="perdeu-senha" element={<LostPassword />} />
         <Route path="resetar" element={<Reset />} />
-        <Route path="*" element={<Login />} />
       </Route>
       <Route path="/" element={<Home />} />
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 };
