@@ -6,15 +6,17 @@ import Router from "routes";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <AuthProvider>
         <BrowserRouter>
           <Header />
-          <Router />
+          <main className="AppBody">
+            <Router />
+          </main>
           <Footer />
         </BrowserRouter>
       </AuthProvider>
-    </>
+    </div>
   );
 }
 
