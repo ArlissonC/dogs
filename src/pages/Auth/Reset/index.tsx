@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Error from "components/Helper/Error";
+import Head from "components/Helper/Head";
 import Input from "components/Input";
 import useFetch from "hooks/useFetch";
 import useForm from "hooks/useForm";
@@ -41,6 +42,7 @@ const Reset = () => {
 
   return (
     <div>
+      <Head title="Resetar senha" />
       <h1 className="title">Resetar senha</h1>
       <form onSubmit={handleSubmit}>
         <Input

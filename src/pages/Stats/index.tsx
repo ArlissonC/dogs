@@ -1,5 +1,7 @@
+import Head from "components/Helper/Head";
+
 const Stats = () => {
-  return <div>Stats</div>;
+  return <Head title="Estatísticas" />;
 };
 
 export default Stats;

@@ -1,3 +1,4 @@
+import Head from "components/Helper/Head";
 import { IPhoto } from "interfaces/Photo/IPhoto";
 import { useEffect, useState } from "react";
 import FeedModal from "./FeedModal";
@@ -7,6 +8,7 @@ const Feed = ({ user }: any) => {
   const [modalPhoto, setModalPhoto] = useState<IPhoto | null>(null);
   const [pages, setPages] = useState([1]);
   const [infinite, setInfinite] = useState(true);
+  const location = window.location.pathname;
 
   useEffect(() => {
     let wait = false;
@@ -35,6 +37,7 @@ const Feed = ({ user }: any) => {
 
   return (
     <div>
+      <Head title={location === "/" ? "Feed" : "Minha Conta"} />
       {modalPhoto && (
         <FeedModal photo={modalPhoto} setModalPhoto={setModalPhoto} />
       )}

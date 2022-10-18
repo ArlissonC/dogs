@@ -1,4 +1,5 @@
 import Error from "components/Helper/Error";
+import Head from "components/Helper/Head";
 import Loading from "components/Helper/Loading";
 import useFetch from "hooks/useFetch";
 import { useEffect } from "react";
@@ -22,6 +23,7 @@ const Photo = () => {
   if (data)
     return (
       <section className="container mainContainer">
+        <Head title={data.data.photo.title} />
         <PhotoContent data={data.data} single={true} />
       </section>
     );

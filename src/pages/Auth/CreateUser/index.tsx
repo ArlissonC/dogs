@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Error from "components/Helper/Error";
+import Head from "components/Helper/Head";
 import Input from "components/Input";
 import { useAuth } from "context/AuthContext";
 import useRequest from "hooks/useFetch";
@@ -32,6 +33,7 @@ const CreateUser = () => {
 
   return (
     <section className="animeLeft">
+      <Head title="Cadastro" />
       <h1 className="title">Cadastre-se</h1>
       <form onSubmit={handleSubmit}>
         <Input label="Usuário" type="text" name="username" {...username} />

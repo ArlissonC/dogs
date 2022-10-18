@@ -1,3 +1,4 @@
+import Head from "components/Helper/Head";
 import Feed from "pages/Feed";
 import { useParams } from "react-router-dom";
 
@@ -6,6 +7,7 @@ const UserProfile = () => {
 
   return (
     <section className="container mainContainer">
+      <Head title={user!} />
       <h1 className="title">{user}</h1>
       <Feed user={user} />
     </section>

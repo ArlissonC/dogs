@@ -91,11 +91,13 @@ const AuthProvider = ({ children }: Props) => {
       });
       localStorage.setItem("token", response.data.token);
       await getUser();
+      return true;
     } catch (error) {
       if (error instanceof Error) {
         setError("Usuário inválido");
         setLogin(false);
       }
+      return false;
     } finally {
       setLoading(false);
     }
