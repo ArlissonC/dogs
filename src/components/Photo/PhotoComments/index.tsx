@@ -7,15 +7,16 @@ import styles from "./PhotoComments.module.css";
 interface PhotoCommentsProps {
   id: number;
   comments: IComment[];
+  single?: boolean;
 }
 
-const PhotoComments = ({ id, comments }: PhotoCommentsProps) => {
+const PhotoComments = ({ id, comments, single }: PhotoCommentsProps) => {
   const [commentsState, setCommentsState] = useState(() => comments);
   const { login } = useAuth();
 
   return (
     <>
-      <ul className={styles.comments}>
+      <ul className={`${styles.comments} ${single ? styles.single : ""}`}>
         {commentsState.map((comment) => (
           <li key={comment.comment_ID}>
             <b>{comment.comment_author}: </b>
@@ -24,7 +25,11 @@ const PhotoComments = ({ id, comments }: PhotoCommentsProps) => {
         ))}
       </ul>
       {login && (
-        <PhotoCommentsForm id={id} setCommentsState={setCommentsState} />
+        <PhotoCommentsForm
+          single={single}
+          id={id}
+          setCommentsState={setCommentsState}
+        />
       )}
     </>
   );

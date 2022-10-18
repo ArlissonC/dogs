@@ -3,6 +3,7 @@ import Login from "pages/Auth/Login";
 import LostPassword from "pages/Auth/LostPassword";
 import Reset from "pages/Auth/Reset";
 import Home from "pages/Home";
+import UserProfile from "pages/UserProfile";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "themes/LoginForm";
@@ -17,6 +18,7 @@ const AuthRoutes = () => {
         <Route path="resetar" element={<Reset />} />
       </Route>
       <Route path="/" element={<Home />} />
+      <Route path="perfil/:user" element={<UserProfile />} />
       <Route path="*" element={<Home />} />
     </Routes>
   );

@@ -9,11 +9,13 @@ import Error from "components/Helper/Error";
 interface PhotoCommentsFormProps {
   id: number;
   setCommentsState: (comment: any) => void;
+  single?: boolean;
 }
 
 const PhotoCommentsForm = ({
   id,
   setCommentsState,
+  single,
 }: PhotoCommentsFormProps) => {
   const [comment, setComment] = useState("");
   const { request, error } = useFetch();
@@ -30,7 +32,10 @@ const PhotoCommentsForm = ({
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${single ? styles.single : ""}`}
+      onSubmit={handleSubmit}
+    >
       <textarea
         className={styles.textarea}
         id="comment"

@@ -12,14 +12,15 @@ interface PhotoContentProps {
     photo: IPhoto;
     comments: IComment[];
   };
+  single?: boolean;
 }
 
-const PhotoContent = ({ data }: PhotoContentProps) => {
+const PhotoContent = ({ data, single }: PhotoContentProps) => {
   const user = useAuth();
   const { photo, comments } = data;
 
   return (
-    <div className={styles.photo}>
+    <div className={`${styles.photo} ${single ? styles.single : ""}`}>
       <div className={styles.img}>
         <Image src={photo.src} alt={photo.title} />
       </div>
@@ -43,7 +44,7 @@ const PhotoContent = ({ data }: PhotoContentProps) => {
           </ul>
         </div>
       </div>
-      <PhotoComments id={photo.id} comments={comments} />
+      <PhotoComments single={single} id={photo.id} comments={comments} />
     </div>
   );
 };

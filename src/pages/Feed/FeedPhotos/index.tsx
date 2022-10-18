@@ -9,16 +9,27 @@ import styles from "./FeedPhotos.module.css";
 
 interface FeedPhotosProps {
   setModalPhoto: (param: IPhoto | null) => void;
+  user: any;
+  page: number;
+  setInfinite: (param: boolean) => void;
 }
 
-const FeedPhotos = ({ setModalPhoto }: FeedPhotosProps) => {
+const FeedPhotos = ({
+  user,
+  setModalPhoto,
+  page,
+  setInfinite,
+}: FeedPhotosProps) => {
   const { data, loading, error, request } = useFetch();
 
   useEffect(() => {
     (async () => {
-      await request(PHOTOS_GET({ page: 1, total: 6, user: 0 }));
+      const total = 6;
+      const { response } = await request(PHOTOS_GET({ page, total, user }));
+      if (response && response.status === 200 && response.data.length < total)
+        setInfinite(false);
     })();
-  }, [request]);
+  }, [request, user, page, setInfinite]);
 
   if (error) return <Error error={error} />;
   if (loading) return <Loading />;
