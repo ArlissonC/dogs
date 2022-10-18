@@ -27,13 +27,16 @@ const PhotoPost = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("img", img.raw);
-    formData.append("nome", nome.value);
-    formData.append("peso", peso.value);
-    formData.append("idade", idade.value);
 
-    await request(PHOTO_POST(formData));
+    if (nome.validate() && peso.validate() && idade.validate() && img.preview) {
+      const formData = new FormData();
+      formData.append("img", img.raw);
+      formData.append("nome", nome.value);
+      formData.append("peso", peso.value);
+      formData.append("idade", idade.value);
+
+      await request(PHOTO_POST(formData));
+    }
   };
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +50,8 @@ const PhotoPost = () => {
     <section className={`${styles.photoPost} anime-left`}>
       <form onSubmit={handleSubmit}>
         <Input label="Nome" type="text" name="nome" {...nome} />
-        <Input label="Peso" type="text" name="peso" {...peso} />
-        <Input label="Idade" type="text" name="idade" {...idade} />
+        <Input label="Peso" type="number" name="peso" {...peso} />
+        <Input label="Idade" type="number" name="idade" {...idade} />
         <input
           className={styles.file}
           type="file"
