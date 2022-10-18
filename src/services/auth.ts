@@ -15,3 +15,7 @@ export const TOKEN_VALIDATE_POST = (body: any) => {
 export const USER_POST = (body: any) => {
   return api.post("/api/user", body);
 };
+
+export const PASSWORD_LOST = (body: any) => {
+  return api.post("/api/password/lost", body);
+};
