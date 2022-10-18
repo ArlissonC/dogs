@@ -19,3 +19,7 @@ export const USER_POST = (body: any) => {
 export const PASSWORD_LOST = (body: any) => {
   return api.post("/api/password/lost", body);
 };
+
+export const PASSWORD_RESET = (body: any) => {
+  return api.post("/api/password/reset", body);
+};
