@@ -19,3 +19,7 @@ export const COMMENT_POST = (id: number, body: any) => {
 export const PHOTO_DELETE = (id: number) => {
   return api.delete(`/api/photo/${id}`);
 };
+
+export const STATS_PHOTO_GET = () => {
+  return api.get("/api/stats");
+};
