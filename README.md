@@ -1,5 +1,5 @@
 <h2 align="center">
- <br>Dogs
+ <br>Dogs 🐶
 </h2>
 
 <h4 align="center">
