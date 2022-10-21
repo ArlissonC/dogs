@@ -25,5 +25,5 @@ Projeto consiste em uma rede social para cachorros onde é possível fazer Login
 $ git clone https://github.com/ArlissonC/dogs.git
 
 # Abra o terminal na pasta do projeto
-$ npm i (Instalar dependências)
-$ npm start (Rodar Projeto React)
+$ yarn (Instalar dependências)
+$ yarn start (Rodar Projeto React)
