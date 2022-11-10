@@ -1,23 +1,22 @@
 import Image from "components/Helper/Image";
 import PhotoComments from "components/Photo/PhotoComments";
 import { useAuth } from "context/AuthContext";
-import { IComment } from "interfaces/Photo/IComment";
-import { IPhoto } from "interfaces/Photo/IPhoto";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "store/configureStore";
 import PhotoDelete from "../PhotoDelete";
 import styles from "./PhotoContent.module.css";
 
 interface PhotoContentProps {
-  data: {
-    photo: IPhoto;
-    comments: IComment[];
-  };
   single?: boolean;
 }
 
-const PhotoContent = ({ data, single }: PhotoContentProps) => {
+const PhotoContent = ({ single }: PhotoContentProps) => {
   const user = useAuth();
-  const { photo, comments } = data;
+
+  const { photo, comments } = useSelector(
+    (state: RootState) => state.photo.data,
+  );
 
   return (
     <div className={`${styles.photo} ${single ? styles.single : ""}`}>

@@ -1,30 +1,32 @@
 import Error from "components/Helper/Error";
 import Head from "components/Helper/Head";
 import Loading from "components/Helper/Loading";
-import useFetch from "hooks/useFetch";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { PHOTO_GET } from "services/photo";
+import { RootState, useAppDispatch } from "store/configureStore";
+import { fetchPhoto } from "store/photo";
 import PhotoContent from "./PhotoContent";
 
 const Photo = () => {
   const { id } = useParams();
 
-  const { data, loading, error, request } = useFetch();
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.photo,
+  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    (async () => {
-      await request(PHOTO_GET(Number(id)));
-    })();
-  }, [request, id]);
+    dispatch(fetchPhoto(Number(id)));
+  }, [dispatch, id]);
 
   if (error) return <Error error={error} />;
   if (loading) return <Loading />;
   if (data)
     return (
       <section className="container mainContainer">
-        <Head title={data.data.photo.title} />
-        <PhotoContent data={data.data} single={true} />
+        <Head title={data.photo.title} />
+        <PhotoContent single={true} />
       </section>
     );
   else return null;

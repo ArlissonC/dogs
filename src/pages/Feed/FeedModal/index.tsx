@@ -1,10 +1,11 @@
 import Error from "components/Helper/Error";
 import Loading from "components/Helper/Loading";
 import PhotoContent from "components/Photo/PhotoContent";
-import useFetch from "hooks/useFetch";
 import { IPhoto } from "interfaces/Photo/IPhoto";
 import { useEffect } from "react";
-import { PHOTO_GET } from "services/photo";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "store/configureStore";
+import { fetchPhoto } from "store/photo";
 import styles from "./FeedModal.module.css";
 
 interface FeedModalProps {
@@ -13,11 +14,14 @@ interface FeedModalProps {
 }
 
 const FeedModal = ({ photo, setModalPhoto }: FeedModalProps) => {
-  const { data, error, loading, request } = useFetch();
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.photo,
+  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    request(PHOTO_GET(photo.id));
-  }, [request, photo]);
+    dispatch(fetchPhoto(Number(photo.id)));
+  }, [dispatch, photo]);
 
   const handleOutsideClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -29,7 +33,7 @@ const FeedModal = ({ photo, setModalPhoto }: FeedModalProps) => {
     <div className={styles.modal} onClick={handleOutsideClick}>
       {error && <Error error={error} />}
       {loading && <Loading />}
-      {data && <PhotoContent data={data.data} />}
+      {data && <PhotoContent />}
     </div>
   );
 };

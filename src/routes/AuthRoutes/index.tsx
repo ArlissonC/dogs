@@ -1,3 +1,4 @@
+import Photo from "components/Photo";
 import CreateUser from "pages/Auth/CreateUser";
 import Login from "pages/Auth/Login";
 import LostPassword from "pages/Auth/LostPassword";
@@ -19,6 +20,7 @@ const AuthRoutes = () => {
       </Route>
       <Route path="/" element={<Home />} />
       <Route path="perfil/:user" element={<UserProfile />} />
+      <Route path="foto/:id" element={<Photo />} />
       <Route path="*" element={<Home />} />
     </Routes>
   );
