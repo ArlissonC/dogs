@@ -15,6 +15,7 @@ Projeto consiste em uma rede social para cachorros onde é possível fazer Login
 ## 💻 Tecnologias
 
 - React
+- Redux
 - Axios
 - Victory
 
