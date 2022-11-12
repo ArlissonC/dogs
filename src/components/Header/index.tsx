@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as Dogs } from "assets/dogs.svg";
 import styles from "./Header.module.css";
-import { useAuth } from "context/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "store/configureStore";
 
 const Header = () => {
-  const { data } = useAuth();
+  const { data } = useSelector((state: RootState) => state.user);
 
   return (
     <header className={styles.header}>

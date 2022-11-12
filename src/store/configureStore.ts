@@ -6,8 +6,10 @@ import {
 } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import photo from "./photo";
+import token from "./token";
+import user from "./user";
 
-const reducer = combineReducers({ photo });
+const reducer = combineReducers({ photo, token, user });
 
 const store = configureStore({
   reducer,

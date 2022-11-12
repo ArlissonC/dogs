@@ -6,10 +6,12 @@ import Home from "pages/Home";
 import PhotoPost from "pages/PhotoPost";
 import Stats from "pages/Stats";
 import UserProfile from "pages/UserProfile";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { RootState } from "store/configureStore";
 
 const UserRoutes = () => {
-  const { data } = useAuth();
+  const { data } = useSelector((state: RootState) => state.user);
 
   return (
     <Routes>

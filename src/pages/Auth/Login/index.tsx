@@ -7,9 +7,15 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import stylesBtn from "components/Button/Button.module.css";
 import Head from "components/Helper/Head";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "store/configureStore";
+import { fetchUser } from "store/user";
 
 const Login = () => {
-  const { userLogin, error, loading } = useAuth();
+  const { token, user } = useSelector((state: RootState) => state);
+  const loading = token.loading || user.loading;
+  const error = token.error || user.error;
+  const dispatch = useAppDispatch();
   const username = useForm();
   const password = useForm();
   const navigate = useNavigate();
@@ -18,11 +24,14 @@ const Login = () => {
     e.preventDefault();
 
     if (username.validate() && password.validate()) {
-      const ok = await userLogin(username.value, password.value);
+      const { payload } = await dispatch(
+        fetchUser({ username: username.value, password: password.value }),
+      );
 
-      if (ok!) navigate("/conta");
+      if (payload) navigate("/conta");
     }
   };
+
   return (
     <section className="animeLeft">
       <Head title="Login" />
