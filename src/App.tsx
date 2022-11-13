@@ -1,23 +1,20 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
-import { AuthProvider } from "context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import Router from "routes";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <AuthProvider>
-        <BrowserRouter>
-          <Header />
-          <main className="AppBody">
-            <Router />
-          </main>
-          <Footer />
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <main className="AppBody">
+          <Router />
+        </main>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

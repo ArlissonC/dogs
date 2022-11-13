@@ -1,4 +1,4 @@
-import { TOKEN_POST } from "./../services/auth";
+import { TOKEN_POST, TOKEN_VALIDATE_POST } from "./../services/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
@@ -15,14 +15,28 @@ export const fetchToken = createAsyncThunk(
   },
 );
 
+export const validateToken = createAsyncThunk(
+  "token/validateToken",
+  async (token: any) => {
+    const { data } = await TOKEN_VALIDATE_POST(token);
+    return data;
+  },
+);
+
 const slice = createSlice({
   name: "token",
   initialState: {
     loading: false,
-    data: null,
+    data: localStorage.getItem("token") || null,
     error: null,
   } as IInitialState,
-  reducers: {},
+  reducers: {
+    resetTokenState: (state) => {
+      state.data = null;
+      state.loading = false;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchToken.pending, (state) => {
       state.loading = true;
@@ -33,12 +47,22 @@ const slice = createSlice({
       state.error = null;
       localStorage.setItem("token", payload.token);
     });
-    builder.addCase(fetchToken.rejected, (state, { payload }) => {
+    builder.addCase(fetchToken.rejected, (state) => {
       state.loading = false;
       state.data = null;
-      state.error = payload;
+      state.error = "Usuário ou senha inválidos";
+    });
+    builder.addCase(validateToken.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(validateToken.rejected, (state) => {
+      state.loading = false;
+      state.data = null;
+      state.error = "Token inválido";
     });
   },
 });
+
+export const { resetTokenState } = slice.actions;
 
 export default slice.reducer;

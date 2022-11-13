@@ -1,7 +1,6 @@
 import Button from "components/Button";
 import Error from "components/Helper/Error";
 import Input from "components/Input";
-import { useAuth } from "context/AuthContext";
 import useForm from "hooks/useForm";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
@@ -24,11 +23,10 @@ const Login = () => {
     e.preventDefault();
 
     if (username.validate() && password.validate()) {
-      const { payload } = await dispatch(
+      const { type } = await dispatch(
         fetchUser({ username: username.value, password: password.value }),
       );
-
-      if (payload) navigate("/conta");
+      if (type === "user/fetchUser/fulfilled") navigate("/conta");
     }
   };
 
