@@ -1,23 +1,33 @@
+import Error from "components/Helper/Error";
 import Head from "components/Helper/Head";
-import { IPhoto } from "interfaces/Photo/IPhoto";
-import { useEffect, useState } from "react";
+import Loading from "components/Helper/Loading";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "store/configureStore";
+import { fetchFeedPhotos, resetFeedState } from "store/feed";
 import FeedModal from "./FeedModal";
 import FeedPhotos from "./FeedPhotos";
 
 const Feed = ({ user }: any) => {
-  const [modalPhoto, setModalPhoto] = useState<IPhoto | null>(null);
-  const [pages, setPages] = useState([1]);
-  const [infinite, setInfinite] = useState(true);
   const location = window.location.pathname;
+  const dispatch = useAppDispatch();
+  const { infinite, loading, list, error } = useSelector(
+    (state: RootState) => state.feed,
+  );
+
+  useEffect(() => {
+    dispatch(resetFeedState());
+    dispatch(fetchFeedPhotos({ user }));
+  }, [dispatch, user]);
 
   useEffect(() => {
     let wait = false;
     const infiniteScroll = () => {
-      if (infinite) {
+      if (infinite && !loading) {
         const scroll = window.scrollY;
         const height = document.body.offsetHeight - window.innerHeight;
         if (scroll > height * 0.75 && !wait) {
-          setPages((pages) => [...pages, pages.length + 1]);
+          dispatch(fetchFeedPhotos({ user }));
           wait = true;
           setTimeout(() => {
             wait = false;
@@ -33,23 +43,16 @@ const Feed = ({ user }: any) => {
       window.removeEventListener("wheel", infiniteScroll);
       window.removeEventListener("scroll", infiniteScroll);
     };
-  }, [infinite]);
+  }, [infinite, dispatch, user, loading]);
 
   return (
     <div>
       <Head title={location === "/" ? "Feed" : "Minha Conta"} />
-      {modalPhoto && (
-        <FeedModal photo={modalPhoto} setModalPhoto={setModalPhoto} />
-      )}
-      {pages.map((page) => (
-        <FeedPhotos
-          key={page}
-          user={user}
-          page={page}
-          setModalPhoto={setModalPhoto}
-          setInfinite={setInfinite}
-        />
-      ))}
+      <FeedModal />
+      {list.length > 0 && <FeedPhotos />}
+      {loading && <Loading />}
+      {error && <Error error={error} />}
+
       {!infinite && !user && (
         <p
           style={{

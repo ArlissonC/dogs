@@ -2,7 +2,7 @@ import { PHOTO_GET } from "./../services/photo";
 import { AppDispatch } from "./configureStore";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-interface initialStateProps {
+interface IInitialStateProps {
   loading: boolean;
   error: any;
   data: any;
@@ -29,7 +29,7 @@ const initialState = {
 };
 
 export default function photo(
-  state = initialState as initialStateProps,
+  state = initialState as IInitialStateProps,
   action: PayloadAction,
 ) {
   switch (action.type) {
