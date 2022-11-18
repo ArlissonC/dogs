@@ -7,11 +7,12 @@ import {
 import { useDispatch } from "react-redux";
 import feed from "./feed";
 import photo from "./photo";
+import photoPost from "./photoPost";
 import token from "./token";
 import ui from "./ui";
 import user from "./user";
 
-const reducer = combineReducers({ photo, token, user, feed, ui });
+const reducer = combineReducers({ photo, token, user, feed, ui, photoPost });
 
 const store = configureStore({
   reducer,

@@ -2,11 +2,12 @@ import Button from "components/Button";
 import Error from "components/Helper/Error";
 import Head from "components/Helper/Head";
 import Input from "components/Input";
-import useFetch from "hooks/useFetch";
 import useForm from "hooks/useForm";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { PHOTO_POST } from "services/photo";
+import { RootState, useAppDispatch } from "store/configureStore";
+import { fetchPhotoPost } from "store/photoPost";
 import styles from "./PhotoPost.module.css";
 
 interface ImgProps {
@@ -19,7 +20,10 @@ const PhotoPost = () => {
   const peso = useForm("number");
   const idade = useForm();
   const [img, setImg] = useState({} as ImgProps);
-  const { data, error, loading, request } = useFetch();
+  const dispatch = useAppDispatch();
+  const { data, error, loading } = useSelector(
+    (state: RootState) => state.photoPost,
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +40,7 @@ const PhotoPost = () => {
       formData.append("peso", peso.value);
       formData.append("idade", idade.value);
 
-      await request(PHOTO_POST(formData));
+      dispatch(fetchPhotoPost(formData));
     }
   };
 

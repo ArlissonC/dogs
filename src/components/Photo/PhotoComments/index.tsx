@@ -1,6 +1,7 @@
-import { useAuth } from "context/AuthContext";
 import { IComment } from "interfaces/Photo/IComment";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "store/configureStore";
 import PhotoCommentsForm from "../PhotoCommentsForm";
 import styles from "./PhotoComments.module.css";
 
@@ -12,7 +13,7 @@ interface PhotoCommentsProps {
 
 const PhotoComments = ({ id, comments, single }: PhotoCommentsProps) => {
   const [commentsState, setCommentsState] = useState(() => comments);
-  const { login } = useAuth();
+  const { data } = useSelector((state: RootState) => state.user);
 
   return (
     <>
@@ -24,7 +25,7 @@ const PhotoComments = ({ id, comments, single }: PhotoCommentsProps) => {
           </li>
         ))}
       </ul>
-      {login && (
+      {data && (
         <PhotoCommentsForm
           single={single}
           id={id}
